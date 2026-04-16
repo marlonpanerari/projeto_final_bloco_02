@@ -11,25 +11,32 @@ export class CategoriaService {
   ) { }
 
   async findAll(): Promise<Categoria[]> {
-    const categorias = await this.categoriaRepository.find();
+    const categorias = await this.categoriaRepository.find({
+      relations: { produto: true },
+    });
     if (categorias.length === 0) {
       throw new HttpException(
         'Nenhuma categoria encontrada!',
-        HttpStatus.NO_CONTENT,
+        HttpStatus.NOT_FOUND,
       );
     }
     return categorias;
   }
 
   async findById(id: number): Promise<Categoria> {
-    let categoria = await this.categoriaRepository.findOne({
+    if (id <= 0) {
+      throw new HttpException('ID inválido!', HttpStatus.BAD_REQUEST);
+    }
+    const categoria = await this.categoriaRepository.findOne({
       where: { id },
+      relations: { produto: true },
     });
-    if (!categoria)
+    if (!categoria) {
       throw new HttpException(
         'Categoria não encontrada!',
         HttpStatus.NOT_FOUND,
       );
+    }
     return categoria;
   }
 
@@ -39,6 +46,7 @@ export class CategoriaService {
     }
     const categorias = await this.categoriaRepository.find({
       where: { nome: ILike(`%${nome}%`) },
+      relations: { produto: true },
     });
     if (categorias.length === 0) {
       throw new HttpException('Nenhuma categoria encontrada com esse nome!', HttpStatus.NOT_FOUND);
@@ -47,11 +55,20 @@ export class CategoriaService {
   }
 
   async create(categoria: Categoria): Promise<Categoria> {
+    if (!categoria.nome || categoria.nome.trim().length === 0) {
+      throw new HttpException('O nome da categoria é obrigatório!', HttpStatus.BAD_REQUEST);
+    }
     return await this.categoriaRepository.save(categoria);
   }
 
   async update(categoria: Categoria): Promise<Categoria> {
+    if (!categoria.id || categoria.id <= 0) {
+      throw new HttpException('O ID da categoria é obrigatório e deve ser válido!', HttpStatus.BAD_REQUEST);
+    }
     await this.findById(categoria.id);
+    if (!categoria.nome || categoria.nome.trim().length === 0) {
+      throw new HttpException('O nome da categoria não pode ficar vazio!', HttpStatus.BAD_REQUEST);
+    }
     return await this.categoriaRepository.save(categoria);
   }
 
