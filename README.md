@@ -94,5 +94,6 @@ O projeto conta com uma camada de "blindagem" nos **Services** para garantir que
     "id": 1
   }
 }
+```
 
-✍️ Desenvolvido como parte do projeto final do Bloco 02 no bootcamp da Generation Brasil.
+✍️ Desenvolvido como projeto final do Bloco 02 no bootcamp FullStack Javascript, da Generation Brasil.
