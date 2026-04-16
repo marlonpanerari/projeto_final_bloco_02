@@ -1,98 +1,98 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 💊 Farmácia API - NestJS
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API desenvolvida com o framework **NestJS** e **TypeORM** para o gerenciamento de categorias e produtos de uma farmácia. O sistema garante a integridade dos dados através de validações robustas em suas camadas de serviço.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 🛠️ Tecnologias Utilizadas
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+* **NestJS**: Framework Node.js para aplicações escaláveis e eficientes.
+* **TypeORM**: ORM (Object-Relational Mapper) para integração com o banco de dados.
+* **MySQL**: Banco de dados relacional para persistência de dados.
+* **Class-Validator**: Biblioteca para validação rigorosa de dados de entrada.
+* **TypeScript**: Adição de tipagem estática ao JavaScript para maior segurança.
 
-## Project setup
+---
 
-```bash
-$ npm install
-```
+## 🏗️ Estrutura do Banco de Dados
 
-## Compile and run the project
+A API utiliza um relacionamento de **Um-para-Muitos (1:N)**:
+* Uma **Categoria** pode estar vinculada a vários **Produtos**.
+* Um **Produto** deve pertencer obrigatoriamente a uma **Categoria** (Chave Estrangeira).
 
-```bash
-# development
-$ npm run start
+---
 
-# watch mode
-$ npm run start:dev
+## 🚀 Como Executar o Projeto
 
-# production mode
-$ npm run start:prod
-```
+1.  **Clone o repositório:**
+    ```bash
+    git clone [https://github.com/seu-usuario/projeto_final_bloco_02.git](https://github.com/seu-usuario/projeto_final_bloco_02.git)
+    ```
 
-## Run tests
+2.  **Instale as dependências:**
+    ```bash
+    npm install
+    ```
 
-```bash
-# unit tests
-$ npm run test
+3.  **Configure o Banco de Dados:**
+    Abra o arquivo `src/app.module.ts` e insira suas credenciais do MySQL:
+    * Host, Porta, Usuário, Senha e Nome do Banco (Database).
 
-# e2e tests
-$ npm run test:e2e
+4.  **Execute a aplicação em modo de desenvolvimento:**
+    ```bash
+    npm run start:dev
+    ```
+    A API estará disponível no endereço: `http://localhost:3000`
 
-# test coverage
-$ npm run test:cov
-```
+---
 
-## Deployment
+## 🔌 Endpoints da API
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### 📂 Categorias (`/categorias`)
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+| Método | Endpoint | Descrição |
+| :--- | :--- | :--- |
+| **GET** | `/categorias` | Lista todas as categorias cadastradas. |
+| **GET** | `/categorias/:id` | Busca uma categoria específica pelo ID. |
+| **GET** | `/categorias/nome/:nome` | Busca categorias por nome (utilizando ILike). |
+| **POST** | `/categorias` | Cria uma nova categoria no sistema. |
+| **PUT** | `/categorias` | Atualiza os dados de uma categoria existente. |
+| **DELETE** | `/categorias/:id` | Remove uma categoria do sistema. |
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+### 📦 Produtos (`/produtos`)
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+| Método | Endpoint | Descrição |
+| :--- | :--- | :--- |
+| **GET** | `/produtos` | Lista todos os produtos com suas respectivas categorias. |
+| **GET** | `/produtos/:id` | Busca um produto específico pelo ID. |
+| **GET** | `/produtos/nome/:nome` | Busca produtos por nome (utilizando ILike). |
+| **POST** | `/produtos` | Cria um novo produto (Requer um ID de Categoria válido). |
+| **PUT** | `/produtos` | Atualiza os dados de um produto existente. |
+| **DELETE** | `/produtos/:id` | Remove um produto do sistema. |
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+## 🛡️ Validações Implementadas
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+O projeto conta com uma camada de "blindagem" nos **Services** para garantir que a API responda com status HTTP semânticos e mensagens claras:
 
-## Support
+* **404 Not Found**: Retornado quando um ID não é localizado ou uma busca por nome não retorna resultados.
+* **400 Bad Request**: Retornado quando campos obrigatórios (como `nome`) estão vazios ou IDs informados são inválidos.
+* **Integridade Referencial**: O sistema valida se a categoria existe antes de permitir a criação ou atualização de um produto, evitando erros de Chave Estrangeira no banco de dados.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+## 📝 Exemplo de JSON para Criação (POST)
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+**Requisição de Produto:**
+```json
+{
+  "nome": "Paracetamol 500mg",
+  "descricao": "Analgésico e Antitérmico",
+  "preco": 15.50,
+  "categoria": {
+    "id": 1
+  }
+}
 
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+✍️ Desenvolvido como parte do projeto final do Bloco 02 no bootcamp da Generation Brasil.
